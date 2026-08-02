@@ -1,0 +1,23 @@
+# Godot writes text resources with LF; keep them LF in the repo to avoid churn.
+*.gd    text eol=lf
+*.tscn  text eol=lf
+*.tres  text eol=lf
+*.godot text eol=lf
+*.import text eol=lf
+*.uid   text eol=lf
+*.cfg   text eol=lf
+*.md    text eol=lf
+*.svg   text eol=lf
+*.gitattributes text eol=lf
+*.gitignore     text eol=lf
+
+# Binary assets — never touch line endings.
+*.png   binary
+*.jpg   binary
+*.webp  binary
+*.ogg   binary
+*.wav   binary
+*.mp3   binary
+*.glb   binary
+*.gltf  binary
+*.exe   binary
