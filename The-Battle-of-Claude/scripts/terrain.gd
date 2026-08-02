@@ -120,10 +120,14 @@ func _bake_nav() -> void:
 	nm.agent_max_slope = 45.0
 	nm.cell_size = 0.25
 	nm.cell_height = 0.25
-	nm.geometry_parsed_geometry_type = NavigationMesh.PARSED_GEOMETRY_BOTH
+	# Parse mesh instances: works at _ready without waiting for the physics
+	# server to register colliders (collider parsing bakes 0 polys pre-physics).
+	nm.geometry_parsed_geometry_type = NavigationMesh.PARSED_GEOMETRY_MESH_INSTANCES
 	nm.geometry_source_geometry_mode = NavigationMesh.SOURCE_GEOMETRY_ROOT_NODE_CHILDREN
 	# Bound the bake to the play area so we don't mesh the whole 1.5 km ground.
 	nm.filter_baking_aabb = AABB(Vector3(-120, -3, -250), Vector3(240, 30, 260))
+
 	nav_region.navigation_mesh = nm
-	# Synchronous bake so the navmesh is ready before bots spawn.
+	# Synchronous bake so the navmesh is ready before bots spawn. (Godot logs a
+	# one-time note that runtime mesh parsing is used — harmless here.)
 	nav_region.bake_navigation_mesh(false)

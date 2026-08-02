@@ -54,8 +54,22 @@ var _weapon_move_mult: float = 1.0
 @onready var ceiling_check: RayCast3D = $CeilingCheck
 
 
+## Team id — 0 is the player's team (see match_manager.gd). Bots on other teams
+## treat the player as an enemy combatant.
+var team: int = 0
+
+
+func get_team() -> int:
+	return team
+
+
+func is_alive() -> bool:
+	return _health > 0.0
+
+
 func _ready() -> void:
 	add_to_group("player")
+	add_to_group("combatant")
 	_mouse_sens = ProjectSettings.get_setting("game/config/mouse_sensitivity", 0.0025)
 	_gravity = ProjectSettings.get_setting("physics/3d/default_gravity", 9.8)
 	_base_cam_pos = camera.position
@@ -83,6 +97,13 @@ func take_damage(amount: float, _pos: Vector3 = Vector3.ZERO, _normal: Variant =
 	health_changed.emit(_health, max_health)
 	if _health <= 0.0:
 		died.emit()
+
+
+func respawn(at: Vector3) -> void:
+	global_position = at
+	velocity = Vector3.ZERO
+	_health = max_health
+	health_changed.emit(_health, max_health)
 
 
 func get_health() -> float:
