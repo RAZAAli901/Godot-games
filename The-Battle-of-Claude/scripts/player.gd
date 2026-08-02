@@ -45,6 +45,7 @@ var _is_crouching: bool = false
 var _bob_time: float = 0.0
 var _base_cam_pos: Vector3
 var _health: float = 100.0
+var _weapon_move_mult: float = 1.0
 
 @onready var head: Node3D = $Head
 @onready var camera: Camera3D = $Head/Camera3D
@@ -133,13 +134,20 @@ func _handle_movement(delta: float) -> void:
 	velocity.z = horizontal.z
 
 
+func set_weapon_move_mult(mult: float) -> void:
+	_weapon_move_mult = mult
+
+
 func _current_speed() -> float:
+	var base: float
 	if _is_crouching:
-		return crouch_speed
-	# Sprint only when actively pushing forward and grounded.
-	if Input.is_action_pressed("sprint") and Input.is_action_pressed("move_forward") and is_on_floor():
-		return sprint_speed
-	return walk_speed
+		base = crouch_speed
+	elif Input.is_action_pressed("sprint") and Input.is_action_pressed("move_forward") and is_on_floor():
+		# Sprint only when actively pushing forward and grounded.
+		base = sprint_speed
+	else:
+		base = walk_speed
+	return base * _weapon_move_mult
 
 
 func _handle_crouch(delta: float) -> void:
