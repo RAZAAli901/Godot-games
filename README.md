@@ -21,10 +21,27 @@ Godot-games/
 
 To add a new game, create a new top-level folder containing its own `project.godot` and add a row to the table above.
 
-## Building / running a game
+## Getting started
 
-Open the game's folder in the Godot editor, or run headlessly:
+Each game is a standalone Godot project — you run it by opening its folder.
+
+**The Battle of Claude** (Godot 4.7.1):
+
+1. Get the engine — [Godot 4.7.1 Standard/GDScript](https://godotengine.org/download/archive/4.7.1-stable/) (a single portable `.exe`).
+2. Launch Godot → **Import** → pick `The-Battle-of-Claude/project.godot` → open.
+3. Press **F5** to play. You boot into the main menu → **PLAY**.
+
+Or launch straight from a terminal:
 
 ```bash
-godot --path The-Battle-of-Claude
+"C:\path\to\Godot_v4.7.1-stable_win64.exe" --path "The-Battle-of-Claude"
+```
+
+Full setup, controls and how to build a standalone `.exe` are in the game's own
+[README](The-Battle-of-Claude/README.md).
+
+## Clone
+
+```bash
+git clone https://github.com/RAZAAli901/Godot-games.git
 ```
