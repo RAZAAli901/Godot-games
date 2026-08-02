@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://bqk1x2m3n4o5p"]
+[gd_scene load_steps=7 format=3 uid="uid://bqk1x2m3n4o5p"]
 
 [ext_resource type="Environment" path="res://resources/default_env.tres" id="1_env"]
 [ext_resource type="Script" path="res://scripts/main.gd" id="2_main"]
+[ext_resource type="PackedScene" path="res://scenes/player/player.tscn" id="3_player"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_1"]
 size = Vector2(200, 200)
@@ -32,3 +33,6 @@ surface_material_override/0 = SubResource("Mat_ground")
 
 [node name="Collision" type="CollisionShape3D" parent="TempGround"]
 shape = SubResource("WBS_1")
+
+[node name="Player" parent="." instance=ExtResource("3_player")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
