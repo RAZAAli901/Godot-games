@@ -23,6 +23,10 @@ func _ready() -> void:
 	_health = max_health
 
 
+func is_alive() -> bool:
+	return not _dead
+
+
 func _process(delta: float) -> void:
 	if _flash > 0.0:
 		_flash = maxf(0.0, _flash - delta * 5.0)

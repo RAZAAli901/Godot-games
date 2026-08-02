@@ -10,6 +10,8 @@ class_name Weapon
 signal ammo_changed(mag: int, reserve: int)
 signal fired()
 signal reload_started(duration: float)
+## Emitted when a shot damages a valid target. killed = the hit dropped it.
+signal hit_confirmed(killed: bool)
 
 const DEFAULT_FOV := 75.0
 const MELEE_MAG := -1 # sentinel: melee weapon, no ammo
@@ -46,6 +48,7 @@ var _camera: Camera3D
 var _player: CharacterBody3D
 var _view_model: Node3D
 var _fire_stream: AudioStream
+var _impact_stream: AudioStream
 var _suppressed: bool = false
 
 
@@ -57,6 +60,7 @@ func _ready() -> void:
 		return
 	_build_view_model()
 	_fire_stream = data.fire_sound if data.fire_sound != null else Sfx.gunshot(data.category)
+	_impact_stream = Sfx.impact()
 	_recompute()
 	_reset_ammo()
 
@@ -312,6 +316,22 @@ func _hitscan(spread_deg: float, override_range: float = -1.0) -> void:
 	if collider != null and collider.has_method("take_damage"):
 		var dist := from.distance_to(hit.position)
 		collider.take_damage(_damage_at(dist), hit.position, hit.get("normal"))
+		var killed: bool = collider.has_method("is_alive") and not collider.is_alive()
+		hit_confirmed.emit(killed)
+	else:
+		_play_impact(hit.position)
+
+
+func _play_impact(pos: Vector3) -> void:
+	if _impact_stream == null:
+		return
+	var p := AudioStreamPlayer3D.new()
+	p.stream = _impact_stream
+	p.unit_size = 6.0
+	get_tree().current_scene.add_child(p)
+	p.global_position = pos
+	p.finished.connect(p.queue_free)
+	p.play()
 
 
 func _damage_at(distance: float) -> float:

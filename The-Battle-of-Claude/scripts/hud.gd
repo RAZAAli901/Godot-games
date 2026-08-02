@@ -8,8 +8,12 @@ extends CanvasLayer
 @onready var health_label: Label = $HealthBar/Value
 @onready var score_label: Label = $Score
 @onready var banner: Label = $Banner
+@onready var crosshair = $Crosshair
+@onready var marker_audio: AudioStreamPlayer = $Marker
 
 var _weapon: Weapon
+var _hitmarker_stream: AudioStream = Sfx.hitmarker()
+var _killconfirm_stream: AudioStream = Sfx.killconfirm()
 
 
 func _ready() -> void:
@@ -47,10 +51,13 @@ func _bind_weapon(weapon: Weapon) -> void:
 			_weapon.ammo_changed.disconnect(_on_ammo_changed)
 		if _weapon.reload_started.is_connected(_on_reload_started):
 			_weapon.reload_started.disconnect(_on_reload_started)
+		if _weapon.hit_confirmed.is_connected(_on_hit_confirmed):
+			_weapon.hit_confirmed.disconnect(_on_hit_confirmed)
 
 	_weapon = weapon
 	_weapon.ammo_changed.connect(_on_ammo_changed)
 	_weapon.reload_started.connect(_on_reload_started)
+	_weapon.hit_confirmed.connect(_on_hit_confirmed)
 	weapon_label.text = _weapon.data.weapon_name
 	var ammo := _weapon.current_ammo()
 	_on_ammo_changed(ammo.x, ammo.y)
@@ -65,6 +72,12 @@ func _on_ammo_changed(mag: int, reserve: int) -> void:
 
 func _on_reload_started(_duration: float) -> void:
 	ammo_label.text = "RELOADING"
+
+
+func _on_hit_confirmed(killed: bool) -> void:
+	crosshair.flash_hit(killed)
+	marker_audio.stream = _killconfirm_stream if killed else _hitmarker_stream
+	marker_audio.play()
 
 
 func _on_health_changed(current: float, maximum: float) -> void:

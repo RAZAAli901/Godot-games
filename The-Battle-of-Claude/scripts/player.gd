@@ -46,6 +46,8 @@ var _bob_time: float = 0.0
 var _base_cam_pos: Vector3
 var _health: float = 100.0
 var _weapon_move_mult: float = 1.0
+var _step_accum: float = 0.0
+var _foot: AudioStreamPlayer
 
 @onready var head: Node3D = $Head
 @onready var camera: Camera3D = $Head/Camera3D
@@ -76,6 +78,10 @@ func _ready() -> void:
 	_yaw = rotation.y
 	_health = max_health
 	health_changed.emit(_health, max_health)
+	_foot = AudioStreamPlayer.new()
+	_foot.stream = Sfx.footstep()
+	_foot.volume_db = -6.0
+	add_child(_foot)
 
 
 func _input(event: InputEvent) -> void:
@@ -143,6 +149,7 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 	_update_aim(delta)
 	_apply_head_bob(delta)
+	_handle_footsteps(delta)
 
 
 func _apply_gravity(delta: float) -> void:
@@ -201,6 +208,19 @@ func _handle_crouch(delta: float) -> void:
 	capsule.height = lerpf(capsule.height, target_height, lerp_w)
 	collision.position.y = capsule.height * 0.5
 	head.position.y = lerpf(head.position.y, target_head_y, lerp_w)
+
+
+func _handle_footsteps(delta: float) -> void:
+	var speed := Vector3(velocity.x, 0.0, velocity.z).length()
+	if not is_on_floor() or speed < 1.5:
+		_step_accum = 0.0
+		return
+	# A step every ~2.2 m of travel; faster movement -> quicker cadence.
+	_step_accum += speed * delta
+	if _step_accum >= 2.2:
+		_step_accum = 0.0
+		_foot.pitch_scale = randf_range(0.9, 1.1)
+		_foot.play()
 
 
 func _apply_head_bob(delta: float) -> void:

@@ -79,3 +79,72 @@ static func engine_loop() -> AudioStreamWAV:
 	wav.loop_begin = 0
 	wav.loop_end = count - 1
 	return wav
+
+
+# ---------------------------------------------------------------- world sfx
+
+static func footstep() -> AudioStreamWAV:
+	return _noise_thud(0.08, 45.0, 60.0, 32.0, 0.55)
+
+
+static func impact() -> AudioStreamWAV:
+	return _noise_thud(0.07, 48.0, 200.0, 45.0, 0.78)
+
+
+static func hitmarker() -> AudioStreamWAV:
+	return _beep(0.05, 1100.0, 55.0)
+
+
+static func killconfirm() -> AudioStreamWAV:
+	# Two rising ticks.
+	return _beep_pair(700.0, 1250.0)
+
+
+static func _noise_thud(dur: float, decay: float, hz: float, hz_decay: float, noise_mix: float) -> AudioStreamWAV:
+	var count := int(RATE * dur)
+	var bytes := PackedByteArray()
+	bytes.resize(count * 2)
+	var prev := 0.0
+	for i in count:
+		var t := float(i) / float(RATE)
+		var env := exp(-t * decay)
+		var white := randf_range(-1.0, 1.0)
+		prev = lerpf(prev, white, 0.5)
+		var tone := sin(TAU * hz * t) * exp(-t * hz_decay)
+		var s := clampf((prev * noise_mix + tone * (1.0 - noise_mix)) * env, -1.0, 1.0)
+		bytes.encode_s16(i * 2, int(s * 30000.0))
+	return _wav(bytes)
+
+
+static func _beep(dur: float, hz: float, decay: float) -> AudioStreamWAV:
+	var count := int(RATE * dur)
+	var bytes := PackedByteArray()
+	bytes.resize(count * 2)
+	for i in count:
+		var t := float(i) / float(RATE)
+		var s := sin(TAU * hz * t) * exp(-t * decay)
+		bytes.encode_s16(i * 2, int(clampf(s, -1.0, 1.0) * 26000.0))
+	return _wav(bytes)
+
+
+static func _beep_pair(hz1: float, hz2: float) -> AudioStreamWAV:
+	var seg := 0.06
+	var count := int(RATE * seg * 2.0)
+	var bytes := PackedByteArray()
+	bytes.resize(count * 2)
+	var half := count / 2
+	for i in count:
+		var local := float(i % half) / float(RATE)
+		var hz := hz1 if i < half else hz2
+		var s := sin(TAU * hz * local) * exp(-local * 45.0)
+		bytes.encode_s16(i * 2, int(clampf(s, -1.0, 1.0) * 26000.0))
+	return _wav(bytes)
+
+
+static func _wav(bytes: PackedByteArray) -> AudioStreamWAV:
+	var wav := AudioStreamWAV.new()
+	wav.format = AudioStreamWAV.FORMAT_16_BITS
+	wav.mix_rate = RATE
+	wav.stereo = false
+	wav.data = bytes
+	return wav
