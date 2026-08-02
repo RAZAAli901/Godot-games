@@ -24,3 +24,5 @@ class_name AttachmentData
 
 @export_group("Special")
 @export var no_muzzle_flash: bool = false
+## Suppressor: quietens and lowers the pitch of the shot.
+@export var audio_suppress: bool = false

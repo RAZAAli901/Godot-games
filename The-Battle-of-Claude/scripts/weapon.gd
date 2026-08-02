@@ -40,10 +40,13 @@ var _default_fov: float = DEFAULT_FOV
 @onready var muzzle: Marker3D = $Muzzle
 @onready var flash: GPUParticles3D = $Muzzle/Flash
 @onready var flash_light: OmniLight3D = $Muzzle/FlashLight
+@onready var fire_audio: AudioStreamPlayer3D = $FireAudio
 
 var _camera: Camera3D
 var _player: CharacterBody3D
 var _view_model: Node3D
+var _fire_stream: AudioStream
+var _suppressed: bool = false
 
 
 func _ready() -> void:
@@ -53,6 +56,7 @@ func _ready() -> void:
 		push_warning("Weapon has no WeaponData assigned.")
 		return
 	_build_view_model()
+	_fire_stream = data.fire_sound if data.fire_sound != null else Sfx.gunshot(data.category)
 	_recompute()
 	_reset_ammo()
 
@@ -105,6 +109,7 @@ func _recompute() -> void:
 	_eff_range_mult = 1.0
 	_eff_move_mult = data.move_speed_mult
 	_no_flash = false
+	_suppressed = false
 	var magf := float(data.mag_size)
 	for slot in attachments:
 		var a: AttachmentData = attachments[slot]
@@ -118,6 +123,8 @@ func _recompute() -> void:
 		magf *= a.mag_mult
 		if a.no_muzzle_flash:
 			_no_flash = true
+		if a.audio_suppress:
+			_suppressed = true
 	_eff_mag = maxi(1, roundi(magf))
 
 
@@ -238,6 +245,7 @@ func _fire() -> void:
 		_hitscan(spread)
 	if not _no_flash:
 		_show_muzzle_flash()
+	_play_shot_sound()
 	_kick()
 	ammo_changed.emit(_mag, _reserve)
 	fired.emit()
@@ -249,7 +257,21 @@ func _melee() -> void:
 	_cooldown = 60.0 / data.fire_rate_rpm
 	_hitscan(0.0, data.melee_range)
 	_melee_swing()
+	_play_shot_sound()
 	fired.emit()
+
+
+func _play_shot_sound() -> void:
+	if _fire_stream == null:
+		return
+	fire_audio.stream = _fire_stream
+	if _suppressed:
+		fire_audio.volume_db = data.fire_volume_db - 11.0
+		fire_audio.pitch_scale = randf_range(0.78, 0.86)
+	else:
+		fire_audio.volume_db = data.fire_volume_db
+		fire_audio.pitch_scale = randf_range(0.96, 1.05)
+	fire_audio.play()
 
 
 func _camera_ref() -> Camera3D:
