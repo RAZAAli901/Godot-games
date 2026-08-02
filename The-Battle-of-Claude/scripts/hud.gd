@@ -6,6 +6,8 @@ extends CanvasLayer
 @onready var weapon_label: Label = $WeaponName
 @onready var health_bar: ProgressBar = $HealthBar
 @onready var health_label: Label = $HealthBar/Value
+@onready var score_label: Label = $Score
+@onready var banner: Label = $Banner
 
 var _weapon: Weapon
 
@@ -20,6 +22,21 @@ func _ready() -> void:
 	if loadout != null:
 		loadout.weapon_switched.connect(_bind_weapon)
 		_bind_weapon(loadout.get_active_weapon())
+
+	var match_mgr := get_tree().get_first_node_in_group("match")
+	if match_mgr != null:
+		match_mgr.counts_changed.connect(_on_counts_changed)
+		match_mgr.match_ended.connect(_on_match_ended)
+
+
+func _on_counts_changed(allies: int, enemies: int) -> void:
+	score_label.text = "Allies %d      Enemies %d" % [allies, enemies]
+
+
+func _on_match_ended(player_won: bool) -> void:
+	banner.text = "VICTORY" if player_won else "DEFEAT"
+	banner.modulate = Color(0.5, 0.9, 0.5) if player_won else Color(0.95, 0.4, 0.35)
+	banner.visible = true
 
 
 func _bind_weapon(weapon: Weapon) -> void:
