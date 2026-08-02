@@ -9,19 +9,29 @@ const TargetScene: PackedScene = preload("res://scenes/world/target_dummy.tscn")
 const COVER_COLOR := Color(0.30, 0.31, 0.28)
 const HILL_COLOR := Color(0.24, 0.22, 0.19)
 const GROUND_COLOR := Color(0.52, 0.5, 0.44)
+const RUIN_COLOR := Color(0.4, 0.38, 0.35)
+const ROAD_COLOR := Color(0.13, 0.13, 0.14)
+const FOLIAGE_COLOR := Color(0.24, 0.34, 0.16)
 
 var nav_region: NavigationRegion3D
+var _detail: Node3D
 
 
 func _ready() -> void:
 	nav_region = NavigationRegion3D.new()
 	add_child(nav_region)
+	_detail = Node3D.new()
+	add_child(_detail)
 	_build_ground()
 	_build_cover()
 	_build_ramps()
 	_build_hills()
-	_spawn_targets()
+	_build_ruins()      # walls become nav obstacles -> bake after
 	_bake_nav()
+	_build_roads()      # visual only
+	_scatter_foliage()  # multimesh, no collision
+	_scatter_debris()
+	_spawn_targets()
 
 
 func _build_ground() -> void:
@@ -110,6 +120,87 @@ func _spawn_targets() -> void:
 		var t := TargetScene.instantiate()
 		add_child(t)
 		t.position = spot
+
+
+func _visual_box(size: Vector3, pos: Vector3, color: Color, rot_y: float = 0.0) -> MeshInstance3D:
+	var mesh := MeshInstance3D.new()
+	var box := BoxMesh.new()
+	box.size = size
+	var mat := StandardMaterial3D.new()
+	mat.albedo_color = color
+	mat.roughness = 0.95
+	mesh.mesh = box
+	mesh.material_override = mat
+	mesh.position = pos
+	mesh.rotation.y = rot_y
+	_detail.add_child(mesh)
+	return mesh
+
+
+func _build_ruins() -> void:
+	# A few broken building shells (walls with a doorway gap). Static -> nav
+	# obstacles, so bots route through the openings.
+	for r in [
+		{"c": Vector3(-24, 0, -30), "w": 10.0, "d": 8.0, "h": 4.0, "rot": 0.2},
+		{"c": Vector3(22, 0, -55), "w": 12.0, "d": 9.0, "h": 5.0, "rot": -0.3},
+		{"c": Vector3(-2, 0, -85), "w": 14.0, "d": 10.0, "h": 4.5, "rot": 0.1},
+	]:
+		_ruin(r["c"], r["w"], r["d"], r["h"], r["rot"])
+
+
+func _ruin(center: Vector3, w: float, d: float, h: float, rot_y: float) -> void:
+	var t := 0.5
+	var basis := Basis(Vector3.UP, rot_y)
+	var parts := [
+		{"size": Vector3(w, h, t), "off": Vector3(0, h * 0.5, -d * 0.5)},          # back
+		{"size": Vector3(t, h, d), "off": Vector3(-w * 0.5, h * 0.5, 0)},          # left
+		{"size": Vector3(t, h * 0.7, d), "off": Vector3(w * 0.5, h * 0.35, 0)},    # right (broken)
+		{"size": Vector3(w * 0.34, h, t), "off": Vector3(-w * 0.33, h * 0.5, d * 0.5)}, # front-left
+		{"size": Vector3(w * 0.34, h * 0.55, t), "off": Vector3(w * 0.33, h * 0.28, d * 0.5)}, # front-right (broken)
+	]
+	for p in parts:
+		var pos: Vector3 = center + basis * p["off"]
+		_make_box(p["size"], pos, rot_y, RUIN_COLOR)
+
+
+func _build_roads() -> void:
+	# Flat asphalt strips (visual only).
+	_visual_box(Vector3(7, 0.06, 230), Vector3(0, 0.03, -100), ROAD_COLOR)
+	_visual_box(Vector3(120, 0.06, 6), Vector3(0, 0.03, -50), ROAD_COLOR, 0.15)
+
+
+func _scatter_foliage() -> void:
+	var bush := CylinderMesh.new()
+	bush.top_radius = 0.0
+	bush.bottom_radius = 0.45
+	bush.height = 1.0
+	var mat := StandardMaterial3D.new()
+	mat.albedo_color = FOLIAGE_COLOR
+	mat.roughness = 1.0
+	bush.material = mat
+
+	var mm := MultiMesh.new()
+	mm.transform_format = MultiMesh.TRANSFORM_3D
+	mm.mesh = bush
+	var count := 500
+	mm.instance_count = count
+	for i in count:
+		var pos := Vector3(randf_range(-90, 90), 0.5, randf_range(-130, 25))
+		var b := Basis(Vector3.UP, randf() * TAU).scaled(Vector3.ONE * randf_range(0.6, 1.5))
+		mm.set_instance_transform(i, Transform3D(b, pos))
+
+	var mmi := MultiMeshInstance3D.new()
+	mmi.multimesh = mm
+	mmi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	_detail.add_child(mmi)
+
+
+func _scatter_debris() -> void:
+	# Small rubble chunks (visual only) so bots don't snag on them.
+	for i in 30:
+		var s := randf_range(0.3, 0.9)
+		var pos := Vector3(randf_range(-60, 60), s * 0.5, randf_range(-110, 10))
+		_visual_box(Vector3(s, s, s), pos, COVER_COLOR.darkened(0.1), randf() * TAU)
 
 
 func _bake_nav() -> void:
