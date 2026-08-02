@@ -20,7 +20,7 @@ environment = ExtResource("1_env")
 transform = Transform3D(1, 0, 0, 0, 0.643, -0.766, 0, 0.766, 0.643, 0, 40, 0)
 light_energy = 2.2
 shadow_enabled = true
-directional_shadow_max_distance = 400.0
+directional_shadow_max_distance = 260.0
 
 [node name="World" parent="." instance=ExtResource("4_world")]
 
