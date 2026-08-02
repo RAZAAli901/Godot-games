@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="AttachmentData" load_steps=2 format=3 uid="uid://datt004xscope03"]
+
+[ext_resource type="Script" path="res://scripts/attachment_data.gd" id="1_ad"]
+
+[resource]
+script = ExtResource("1_ad")
+attachment_name = "4x Scope"
+slot = "Optic"
+recoil_v_mult = 0.9
+recoil_h_mult = 0.95
+ads_time_mult = 1.2
+range_mult = 1.15
+move_mult = 0.97

@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="AttachmentData" load_steps=2 format=3 uid="uid://datt00extmag008"]
+
+[ext_resource type="Script" path="res://scripts/attachment_data.gd" id="1_ad"]
+
+[resource]
+script = ExtResource("1_ad")
+attachment_name = "Extended Mag"
+slot = "Magazine"
+ads_time_mult = 1.05
+mag_mult = 1.5
+move_mult = 0.97

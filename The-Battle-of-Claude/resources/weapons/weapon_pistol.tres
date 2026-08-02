@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="WeaponData" load_steps=2 format=3 uid="uid://dpistol0weap0006"]
+
+[ext_resource type="Script" path="res://scripts/weapon_data.gd" id="1_wd"]
+
+[resource]
+script = ExtResource("1_wd")
+weapon_name = "Sidearm P12"
+category = "Pistol"
+loadout_slot = "secondary"
+damage_near = 25.0
+damage_far = 14.0
+falloff_start = 15.0
+falloff_end = 40.0
+pellets = 1
+fire_rate_rpm = 400.0
+mag_size = 12
+reload_time = 1.5
+ads_speed = 0.15
+automatic = false
+max_range = 150.0
+hip_spread_deg = 2.5
+ads_fov = 60.0
+move_speed_mult = 1.0
+recoil_vertical = 0.018
+recoil_horizontal = 0.008
+model_size = Vector3(0.05, 0.11, 0.22)
+model_color = Color(0.12, 0.13, 0.14, 1)

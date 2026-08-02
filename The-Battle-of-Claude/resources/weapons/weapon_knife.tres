@@ -1,0 +1,29 @@
+[gd_resource type="Resource" script_class="WeaponData" load_steps=2 format=3 uid="uid://dknife00weap0007"]
+
+[ext_resource type="Script" path="res://scripts/weapon_data.gd" id="1_wd"]
+
+[resource]
+script = ExtResource("1_wd")
+weapon_name = "Combat Knife"
+category = "Knife"
+loadout_slot = "melee"
+damage_near = 55.0
+damage_far = 55.0
+falloff_start = 1.5
+falloff_end = 1.5
+pellets = 1
+fire_rate_rpm = 120.0
+mag_size = 0
+reload_time = 0.0
+ads_speed = 0.1
+automatic = false
+max_range = 1.5
+hip_spread_deg = 0.0
+ads_fov = 70.0
+move_speed_mult = 1.05
+is_melee = true
+melee_range = 1.5
+recoil_vertical = 0.0
+recoil_horizontal = 0.0
+model_size = Vector3(0.02, 0.05, 0.35)
+model_color = Color(0.6, 0.62, 0.65, 1)

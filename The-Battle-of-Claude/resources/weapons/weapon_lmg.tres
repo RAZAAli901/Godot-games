@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="WeaponData" load_steps=2 format=3 uid="uid://dlmg1weapon0004"]
+
+[ext_resource type="Script" path="res://scripts/weapon_data.gd" id="1_wd"]
+
+[resource]
+script = ExtResource("1_wd")
+weapon_name = "M249 LMG"
+category = "LMG"
+loadout_slot = "primary"
+damage_near = 28.0
+damage_far = 20.0
+falloff_start = 50.0
+falloff_end = 110.0
+pellets = 1
+fire_rate_rpm = 600.0
+mag_size = 100
+reload_time = 4.5
+ads_speed = 0.35
+automatic = true
+max_range = 350.0
+hip_spread_deg = 3.5
+ads_fov = 57.0
+move_speed_mult = 0.85
+recoil_vertical = 0.028
+recoil_horizontal = 0.012
+model_size = Vector3(0.1, 0.14, 0.7)
+model_color = Color(0.14, 0.17, 0.12, 1)

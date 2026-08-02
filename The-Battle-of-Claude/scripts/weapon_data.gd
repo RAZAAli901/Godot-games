@@ -1,11 +1,13 @@
 extends Resource
 class_name WeaponData
-## Tunable stats for one weapon. Stored as .tres so balance can be tuned
-## without touching code (see WORKING RULES in BRIEF.md). Attachment modifiers
-## (Phase 2) will be applied on top of these base values at equip time.
+## Tunable base stats for one weapon. Stored as .tres so balance can be tuned
+## without touching code (see WORKING RULES in BRIEF.md). AttachmentData
+## modifiers are folded on top of these at equip time (see weapon.gd).
 
 @export var weapon_name: String = "Weapon"
 @export var category: String = "AR" # AR / SMG / Shotgun / LMG / Sniper / Pistol / Knife
+## Loadout slot this weapon occupies: "primary", "secondary" or "melee".
+@export var loadout_slot: String = "primary"
 
 @export_group("Damage")
 @export var damage_near: float = 30.0
@@ -14,19 +16,38 @@ class_name WeaponData
 @export var falloff_start: float = 40.0
 ## Distance (m) where damage reaches the far value; clamps beyond.
 @export var falloff_end: float = 90.0
+## Pellets fired per shot (shotgun = 8). Each pellet does the damage above.
+@export var pellets: int = 1
 
 @export_group("Handling")
 @export var fire_rate_rpm: float = 650.0
 @export var mag_size: int = 30
 @export var reload_time: float = 2.3
+## Time (s) to raise sights. Lower = snappier ADS.
 @export var ads_speed: float = 0.25
 @export var automatic: bool = true
 @export var max_range: float = 300.0
+## Base hip-fire spread cone (degrees). ADS tightens this toward zero.
+@export var hip_spread_deg: float = 2.0
+## Camera FOV when aiming down sights (lower = more zoom; snipers are lowest).
+@export var ads_fov: float = 55.0
+## Movement speed multiplier while this weapon is equipped (heavier = slower).
+@export var move_speed_mult: float = 1.0
+
+@export_group("Melee")
+@export var is_melee: bool = false
+@export var melee_range: float = 1.5
 
 @export_group("Recoil (radians per shot)")
-## Vertical climb per shot; horizontal is applied with alternating drift.
 @export var recoil_vertical: float = 0.022
 @export var recoil_horizontal: float = 0.010
+
+@export_group("View model (greybox)")
+## Box dimensions for the placeholder view model until a real mesh is set.
+@export var model_size: Vector3 = Vector3(0.07, 0.11, 0.55)
+@export var model_color: Color = Color(0.12, 0.13, 0.14)
+## Optional real model; when set, replaces the greybox box.
+@export var view_model: PackedScene
 
 
 func damage_at(distance: float) -> float:

@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="WeaponData" load_steps=2 format=3 uid="uid://dsniper0weap0005"]
+
+[ext_resource type="Script" path="res://scripts/weapon_data.gd" id="1_wd"]
+
+[resource]
+script = ExtResource("1_wd")
+weapon_name = "Longbow Sniper"
+category = "Sniper"
+loadout_slot = "primary"
+damage_near = 95.0
+damage_far = 70.0
+falloff_start = 100.0
+falloff_end = 200.0
+pellets = 1
+fire_rate_rpm = 45.0
+mag_size = 5
+reload_time = 3.5
+ads_speed = 0.45
+automatic = false
+max_range = 500.0
+hip_spread_deg = 5.0
+ads_fov = 25.0
+move_speed_mult = 0.88
+recoil_vertical = 0.035
+recoil_horizontal = 0.005
+model_size = Vector3(0.06, 0.1, 0.95)
+model_color = Color(0.06, 0.06, 0.07, 1)

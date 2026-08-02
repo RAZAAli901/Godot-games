@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="WeaponData" load_steps=2 format=3 uid="uid://dsmg1weapon002"]
+
+[ext_resource type="Script" path="res://scripts/weapon_data.gd" id="1_wd"]
+
+[resource]
+script = ExtResource("1_wd")
+weapon_name = "MP-X SMG"
+category = "SMG"
+loadout_slot = "primary"
+damage_near = 22.0
+damage_far = 10.0
+falloff_start = 20.0
+falloff_end = 45.0
+pellets = 1
+fire_rate_rpm = 850.0
+mag_size = 25
+reload_time = 1.8
+ads_speed = 0.18
+automatic = true
+max_range = 200.0
+hip_spread_deg = 3.0
+ads_fov = 60.0
+move_speed_mult = 1.0
+recoil_vertical = 0.016
+recoil_horizontal = 0.014
+model_size = Vector3(0.06, 0.1, 0.38)
+model_color = Color(0.15, 0.15, 0.16, 1)
