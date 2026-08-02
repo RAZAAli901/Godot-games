@@ -25,12 +25,20 @@ It's a single portable `.exe` — no installer needed.
 2. Select `The-Battle-of-Claude/project.godot` and open it.
 3. Press **F5** (or the ▶ Play button, top-right).
 
-**From a terminal** (no editor UI)
-```bash
-"C:\path\to\Godot_v4.7.1-stable_win64.exe" --path "The-Battle-of-Claude"
+**From a terminal** — point both paths at where things actually live.
+
+PowerShell (note the leading `&` call operator — required to run a quoted path):
+```powershell
+& "D:\godot\Godot_v4.7.1-stable_win64.exe" --path "D:\godot games\The-Battle-of-Claude"
 ```
 
-Either way you boot into the main menu → **PLAY**.
+Command Prompt (`cmd.exe`) — no `&`:
+```bat
+"D:\godot\Godot_v4.7.1-stable_win64.exe" --path "D:\godot games\The-Battle-of-Claude"
+```
+
+Swap in your own Godot `.exe` path and project path if they differ. Either way
+you boot into the main menu → **PLAY**.
 
 ### 3. Build a standalone .exe (optional)
 
@@ -40,11 +48,9 @@ A build needs the **export templates** for 4.7.1 (one-time, ~1 GB):
 - Then **Project ▸ Export…** already has a *Windows Desktop* preset — click
   **Export Project** → `build/TheBattleOfClaude.exe`.
 
-Or entirely from the command line:
-```bash
-# once: templates must be installed (see above)
-"C:\path\to\Godot_v4.7.1-stable_win64.exe" --headless --path "The-Battle-of-Claude" \
-  --export-debug "Windows Desktop" build/TheBattleOfClaude.exe
+Or entirely from the command line (PowerShell; templates must be installed first):
+```powershell
+& "D:\godot\Godot_v4.7.1-stable_win64.exe" --headless --path "D:\godot games\The-Battle-of-Claude" --export-debug "Windows Desktop" build/TheBattleOfClaude.exe
 ```
 The build writes `TheBattleOfClaude.exe` + `.pck` into `build/` (git-ignored).
 

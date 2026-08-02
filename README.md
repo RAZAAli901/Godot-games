@@ -31,10 +31,11 @@ Each game is a standalone Godot project — you run it by opening its folder.
 2. Launch Godot → **Import** → pick `The-Battle-of-Claude/project.godot` → open.
 3. Press **F5** to play. You boot into the main menu → **PLAY**.
 
-Or launch straight from a terminal:
+Or launch straight from a terminal (PowerShell — the leading `&` is required to
+run a quoted `.exe` path; use your own Godot + project paths):
 
-```bash
-"C:\path\to\Godot_v4.7.1-stable_win64.exe" --path "The-Battle-of-Claude"
+```powershell
+& "D:\godot\Godot_v4.7.1-stable_win64.exe" --path "D:\godot games\The-Battle-of-Claude"
 ```
 
 Full setup, controls and how to build a standalone `.exe` are in the game's own
