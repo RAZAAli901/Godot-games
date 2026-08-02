@@ -30,6 +30,7 @@ func _ready() -> void:
 	if data == null:
 		push_warning("Weapon has no WeaponData assigned.")
 		return
+	add_to_group("weapon")
 	_mag = data.mag_size
 	_reserve = data.mag_size * 6
 	_player = get_tree().get_first_node_in_group("player")
@@ -56,6 +57,14 @@ func _process(delta: float) -> void:
 	var wants_fire := Input.is_action_pressed("fire") if data.automatic else Input.is_action_just_pressed("fire")
 	if wants_fire and _can_fire():
 		_fire()
+
+
+func current_ammo() -> Vector2i:
+	return Vector2i(_mag, _reserve)
+
+
+func is_reloading() -> bool:
+	return _reloading
 
 
 func _can_fire() -> bool:

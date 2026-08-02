@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://bqk1x2m3n4o5p"]
+[gd_scene load_steps=6 format=3 uid="uid://bqk1x2m3n4o5p"]
 
 [ext_resource type="Environment" path="res://resources/default_env.tres" id="1_env"]
 [ext_resource type="Script" path="res://scripts/main.gd" id="2_main"]
 [ext_resource type="PackedScene" path="res://scenes/player/player.tscn" id="3_player"]
 [ext_resource type="PackedScene" path="res://scenes/world/terrain.tscn" id="4_world"]
+[ext_resource type="PackedScene" path="res://scenes/ui/hud.tscn" id="5_hud"]
 
 [node name="Main" type="Node3D"]
 script = ExtResource("2_main")
@@ -13,11 +14,13 @@ environment = ExtResource("1_env")
 
 [node name="Sun" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.643, -0.766, 0, 0.766, 0.643, 0, 40, 0)
-light_energy = 1.2
+light_energy = 2.2
 shadow_enabled = true
-directional_shadow_max_distance = 300.0
+directional_shadow_max_distance = 400.0
 
 [node name="World" parent="." instance=ExtResource("4_world")]
 
 [node name="Player" parent="." instance=ExtResource("3_player")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+
+[node name="HUD" parent="." instance=ExtResource("5_hud")]

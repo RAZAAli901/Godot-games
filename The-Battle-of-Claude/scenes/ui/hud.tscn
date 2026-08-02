@@ -1,0 +1,63 @@
+[gd_scene load_steps=5 format=3 uid="uid://chud00000001a"]
+
+[ext_resource type="Script" path="res://scripts/hud.gd" id="1_hud"]
+[ext_resource type="Script" path="res://scripts/crosshair.gd" id="2_ch"]
+
+[sub_resource type="StyleBoxFlat" id="SB_bg"]
+bg_color = Color(0, 0, 0, 0.45)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id="SB_fill"]
+bg_color = Color(0.45, 0.8, 0.42, 0.92)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[node name="HUD" type="CanvasLayer"]
+script = ExtResource("1_hud")
+
+[node name="Crosshair" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+script = ExtResource("2_ch")
+
+[node name="Ammo" type="Label" parent="."]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -300.0
+offset_top = -100.0
+offset_right = -40.0
+offset_bottom = -40.0
+theme_override_font_sizes/font_size = 40
+text = "30 / 180"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="HealthBar" type="ProgressBar" parent="."]
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 40.0
+offset_top = -74.0
+offset_right = 340.0
+offset_bottom = -40.0
+theme_override_styles/background = SubResource("SB_bg")
+theme_override_styles/fill = SubResource("SB_fill")
+max_value = 100.0
+value = 100.0
+show_percentage = false
+
+[node name="Value" type="Label" parent="HealthBar"]
+layout_mode = 1
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme_override_font_sizes/font_size = 20
+text = "100"
+horizontal_alignment = 1
+vertical_alignment = 1

@@ -24,6 +24,12 @@ extends CharacterBody3D
 ## How fast the view returns to aim after a recoil kick (higher = snappier).
 @export var recoil_recovery: float = 9.0
 
+@export_group("Health")
+@export var max_health: float = 100.0
+
+signal health_changed(current: float, maximum: float)
+signal died()
+
 const STAND_HEIGHT := 1.8
 const CROUCH_HEIGHT := 1.1
 const STAND_HEAD_Y := 1.6
@@ -38,6 +44,7 @@ var _recoil: Vector2 = Vector2.ZERO # x = pitch add, y = yaw add (radians)
 var _is_crouching: bool = false
 var _bob_time: float = 0.0
 var _base_cam_pos: Vector3
+var _health: float = 100.0
 
 @onready var head: Node3D = $Head
 @onready var camera: Camera3D = $Head/Camera3D
@@ -52,6 +59,8 @@ func _ready() -> void:
 	_gravity = ProjectSettings.get_setting("physics/3d/default_gravity", 9.8)
 	_base_cam_pos = camera.position
 	_yaw = rotation.y
+	_health = max_health
+	health_changed.emit(_health, max_health)
 
 
 func _input(event: InputEvent) -> void:
@@ -64,6 +73,23 @@ func _input(event: InputEvent) -> void:
 func apply_recoil(vertical: float, horizontal: float) -> void:
 	_recoil.x += vertical
 	_recoil.y += horizontal
+
+
+func take_damage(amount: float, _pos: Vector3 = Vector3.ZERO, _normal: Variant = null) -> void:
+	if _health <= 0.0:
+		return
+	_health = maxf(0.0, _health - amount)
+	health_changed.emit(_health, max_health)
+	if _health <= 0.0:
+		died.emit()
+
+
+func get_health() -> float:
+	return _health
+
+
+func get_health_ratio() -> float:
+	return _health / max_health if max_health > 0.0 else 0.0
 
 
 func _update_aim(delta: float) -> void:
