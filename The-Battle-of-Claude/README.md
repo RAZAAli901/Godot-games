@@ -12,7 +12,18 @@ physics). Built in phases — see [BRIEF.md](BRIEF.md) for the full design.
 - ✅ Greybox arena (~1.5 km ground) with cover, ramps, ruin-hills, targets
 - ✅ Test AR: hitscan, range damage falloff, climbing recoil, muzzle flash
 - ✅ HUD: crosshair, ammo counter, health bar
-- ⬜ Phase 2 — full weapon roster + gunsmith (next)
+
+**Phase 2 — Full Weapon System + Gunsmith: in progress.**
+
+- ✅ 7-weapon roster (AR / SMG / Shotgun / LMG / Sniper / Pistol / Knife), all
+  stats as `.tres`; pellets, semi/bolt/auto, melee, ADS zoom, move penalty
+- ✅ Loadout (Primary + Pistol + Knife) with 1/2/3 switching
+- ✅ Gunsmith (press `G`): swap primary + one attachment per slot; 12 attachments
+  fold multiplicatively onto real stats with a live preview
+- ✅ Per-weapon gunshot SFX (procedural placeholder); suppressor quietens
+- ✅ Real weapon models (Kenney Blaster Kit, CC0) for the 6 guns
+- ⬜ Reload animations (needs an FPS-arm rig — see ASSETS_CREDITS.md)
+- ⬜ Knife blade model + real recorded SFX (manual asset sourcing)
 
 ## Controls
 
@@ -26,6 +37,8 @@ physics). Built in phases — see [BRIEF.md](BRIEF.md) for the full design.
 | Fire | Left Mouse |
 | Aim (ADS) | Right Mouse |
 | Reload | `R` |
+| Switch weapon | `1` Primary / `2` Pistol / `3` Knife |
+| Gunsmith | `G` |
 | Release mouse | `Esc` |
 
 ## Run

@@ -6,7 +6,7 @@ A collection of games built with the [Godot Engine](https://godotengine.org/). E
 
 | Game | Folder | Engine | Type | Status |
 |---|---|---|---|---|
-| The Battle of Claude | [`The-Battle-of-Claude/`](The-Battle-of-Claude/) | Godot 4.7.1 | Battlefield-style FPS vs AI bots | Phase 1 complete |
+| The Battle of Claude | [`The-Battle-of-Claude/`](The-Battle-of-Claude/) | Godot 4.7.1 | Battlefield-style FPS vs AI bots | Phase 2 — weapons + gunsmith |
 
 ## Repository layout
 
