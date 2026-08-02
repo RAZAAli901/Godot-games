@@ -25,6 +25,16 @@ physics). Built in phases — see [BRIEF.md](BRIEF.md) for the full design.
 - ⬜ Reload animations (needs an FPS-arm rig — see ASSETS_CREDITS.md)
 - ⬜ Knife blade model + real recorded SFX (manual asset sourcing)
 
+**Phase 3 — AI Bots + Vehicles + World Sound: in progress.**
+
+- ✅ Navmesh baked over the arena; bots pathfind + route around cover
+- ✅ AI bots: target acquisition, line-of-sight, hitscan combat, death
+- ✅ 8v8 team deathmatch (config `team_size`), live score, win/lose banner,
+  player respawn
+- ✅ Drivable jeep (VehicleBody3D): enter/exit, engine sound, ram damage
+- ✅ World SFX: footsteps, bullet impacts, hit-marker + kill-confirm
+- ⬜ Truck + military-car variants, bot cover-seeking polish (follow-up)
+
 ## Controls
 
 | Action | Key |
@@ -39,6 +49,7 @@ physics). Built in phases — see [BRIEF.md](BRIEF.md) for the full design.
 | Reload | `R` |
 | Switch weapon | `1` Primary / `2` Pistol / `3` Knife |
 | Gunsmith | `G` |
+| Enter / exit vehicle | `E` (near it) |
 | Release mouse | `Esc` |
 
 ## Run
