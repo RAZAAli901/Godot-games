@@ -64,11 +64,15 @@ func _ready() -> void:
 # ---------------------------------------------------------------- view model
 
 func _build_view_model() -> void:
-	muzzle.position = Vector3(0, 0, -data.model_size.z * 0.5 - 0.02)
 	if data.view_model != null:
 		_view_model = data.view_model.instantiate()
 		add_child(_view_model)
+		_view_model.scale = Vector3.ONE * data.model_scale
+		_view_model.rotation_degrees = data.model_euler_deg
+		_view_model.position = data.model_offset
+		muzzle.position = data.muzzle_offset
 		return
+	muzzle.position = Vector3(0, 0, -data.model_size.z * 0.5 - 0.02)
 	# Greybox: a single box sized/coloured from the data.
 	var mesh := MeshInstance3D.new()
 	var box := BoxMesh.new()

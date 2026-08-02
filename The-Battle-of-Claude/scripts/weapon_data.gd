@@ -52,8 +52,15 @@ class_name WeaponData
 ## Box dimensions for the placeholder view model until a real mesh is set.
 @export var model_size: Vector3 = Vector3(0.07, 0.11, 0.55)
 @export var model_color: Color = Color(0.12, 0.13, 0.14)
+
+@export_group("View model (real)")
 ## Optional real model; when set, replaces the greybox box.
 @export var view_model: PackedScene
+@export var model_scale: float = 1.0
+@export var model_euler_deg: Vector3 = Vector3.ZERO
+@export var model_offset: Vector3 = Vector3.ZERO
+## Muzzle tip position (where flash + tracer originate) for the real model.
+@export var muzzle_offset: Vector3 = Vector3(0, 0, -0.45)
 
 
 func damage_at(distance: float) -> float:
