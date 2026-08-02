@@ -52,3 +52,30 @@ static func gunshot(category: String) -> AudioStreamWAV:
 	wav.stereo = false
 	wav.data = bytes
 	return wav
+
+
+## Seamless low engine rumble to loop under a vehicle (pitch scaled by speed at
+## playback). Uses whole cycles of the base frequency so the loop is clickless.
+static func engine_loop() -> AudioStreamWAV:
+	var base_hz := 55.0
+	var cycles := 22 # whole cycles -> seamless loop
+	var count := int(RATE * cycles / base_hz)
+	var bytes := PackedByteArray()
+	bytes.resize(count * 2)
+	for i in count:
+		var t := float(i) / float(RATE)
+		var s := 0.5 * sin(TAU * base_hz * t)
+		s += 0.3 * sin(TAU * base_hz * 2.0 * t)
+		s += 0.15 * sin(TAU * base_hz * 3.0 * t)
+		s += 0.08 * randf_range(-1.0, 1.0)
+		bytes.encode_s16(i * 2, int(clampf(s, -1.0, 1.0) * 22000.0))
+
+	var wav := AudioStreamWAV.new()
+	wav.format = AudioStreamWAV.FORMAT_16_BITS
+	wav.mix_rate = RATE
+	wav.stereo = false
+	wav.data = bytes
+	wav.loop_mode = AudioStreamWAV.LOOP_FORWARD
+	wav.loop_begin = 0
+	wav.loop_end = count - 1
+	return wav

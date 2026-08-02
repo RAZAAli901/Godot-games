@@ -99,6 +99,21 @@ func take_damage(amount: float, _pos: Vector3 = Vector3.ZERO, _normal: Variant =
 		died.emit()
 
 
+## Toggle "in vehicle" mode: freezes the on-foot controller, hides the body and
+## hands camera/weapons over to the vehicle (see vehicle.gd).
+func set_driving(on: bool) -> void:
+	set_physics_process(not on)
+	set_process_input(not on)
+	collision.disabled = on
+	visible = not on
+	camera.current = not on
+	var loadout := get_tree().get_first_node_in_group("loadout")
+	if loadout != null:
+		loadout.set_combat_enabled(not on)
+	if on:
+		velocity = Vector3.ZERO
+
+
 func respawn(at: Vector3) -> void:
 	global_position = at
 	velocity = Vector3.ZERO

@@ -77,6 +77,12 @@ func _apply_active() -> void:
 
 # ---------------------------------------------------------------- gunsmith API
 
+func set_combat_enabled(on: bool) -> void:
+	var w := get_active_weapon()
+	if w != null:
+		w.set_active(on)
+
+
 func get_active_weapon() -> Weapon:
 	return _weapons[_active] if _active < _weapons.size() else null
 

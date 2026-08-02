@@ -1,0 +1,123 @@
+[gd_scene load_steps=8 format=3 uid="uid://cvehicle0jeep01"]
+
+[ext_resource type="Script" path="res://scripts/vehicle.gd" id="1_veh"]
+
+[sub_resource type="BoxMesh" id="Body_mesh"]
+size = Vector3(1.8, 0.7, 3.6)
+
+[sub_resource type="StandardMaterial3D" id="Body_mat"]
+albedo_color = Color(0.28, 0.34, 0.22, 1)
+roughness = 0.6
+metallic = 0.2
+
+[sub_resource type="BoxShape3D" id="Body_shape"]
+size = Vector3(1.8, 0.7, 3.4)
+
+[sub_resource type="CylinderMesh" id="Wheel_mesh"]
+top_radius = 0.4
+bottom_radius = 0.4
+height = 0.3
+
+[sub_resource type="StandardMaterial3D" id="Wheel_mat"]
+albedo_color = Color(0.08, 0.08, 0.09, 1)
+roughness = 0.8
+
+[sub_resource type="BoxShape3D" id="Ram_shape"]
+size = Vector3(1.8, 1.0, 0.6)
+
+[node name="Vehicle" type="VehicleBody3D"]
+mass = 600.0
+script = ExtResource("1_veh")
+
+[node name="Body" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15, 0)
+mesh = SubResource("Body_mesh")
+surface_material_override/0 = SubResource("Body_mat")
+
+[node name="Cabin" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0.3)
+mesh = SubResource("Body_mesh")
+surface_material_override/0 = SubResource("Body_mat")
+scale = Vector3(0.85, 0.7, 0.4)
+
+[node name="Collision" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15, 0)
+shape = SubResource("Body_shape")
+
+[node name="WheelFL" type="VehicleWheel3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.9, -0.3, -1.3)
+use_as_traction = true
+use_as_steering = true
+wheel_radius = 0.4
+wheel_friction_slip = 3.0
+suspension_travel = 0.3
+suspension_stiffness = 24.0
+damping_compression = 0.5
+damping_relaxation = 1.0
+
+[node name="Mesh" type="MeshInstance3D" parent="WheelFL"]
+transform = Transform3D(0, 1, 0, -1, 0, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("Wheel_mesh")
+surface_material_override/0 = SubResource("Wheel_mat")
+
+[node name="WheelFR" type="VehicleWheel3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.9, -0.3, -1.3)
+use_as_traction = true
+use_as_steering = true
+wheel_radius = 0.4
+wheel_friction_slip = 3.0
+suspension_travel = 0.3
+suspension_stiffness = 24.0
+damping_compression = 0.5
+damping_relaxation = 1.0
+
+[node name="Mesh" type="MeshInstance3D" parent="WheelFR"]
+transform = Transform3D(0, 1, 0, -1, 0, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("Wheel_mesh")
+surface_material_override/0 = SubResource("Wheel_mat")
+
+[node name="WheelRL" type="VehicleWheel3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.9, -0.3, 1.3)
+use_as_traction = true
+wheel_radius = 0.4
+wheel_friction_slip = 3.0
+suspension_travel = 0.3
+suspension_stiffness = 24.0
+damping_compression = 0.5
+damping_relaxation = 1.0
+
+[node name="Mesh" type="MeshInstance3D" parent="WheelRL"]
+transform = Transform3D(0, 1, 0, -1, 0, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("Wheel_mesh")
+surface_material_override/0 = SubResource("Wheel_mat")
+
+[node name="WheelRR" type="VehicleWheel3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.9, -0.3, 1.3)
+use_as_traction = true
+wheel_radius = 0.4
+wheel_friction_slip = 3.0
+suspension_travel = 0.3
+suspension_stiffness = 24.0
+damping_compression = 0.5
+damping_relaxation = 1.0
+
+[node name="Mesh" type="MeshInstance3D" parent="WheelRR"]
+transform = Transform3D(0, 1, 0, -1, 0, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("Wheel_mesh")
+surface_material_override/0 = SubResource("Wheel_mat")
+
+[node name="SeatCamera" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.985, -0.174, 0, 0.174, 0.985, 0, 2.6, 5.5)
+fov = 75.0
+
+[node name="ExitPoint" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.2, 0.5, 0)
+
+[node name="EngineAudio" type="AudioStreamPlayer3D" parent="."]
+unit_size = 14.0
+
+[node name="Ram" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, -2.0)
+
+[node name="RamCol" type="CollisionShape3D" parent="Ram"]
+shape = SubResource("Ram_shape")
