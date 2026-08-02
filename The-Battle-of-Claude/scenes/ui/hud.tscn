@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://chud00000001a"]
+[gd_scene load_steps=6 format=3 uid="uid://chud00000001a"]
 
 [ext_resource type="Script" path="res://scripts/hud.gd" id="1_hud"]
 [ext_resource type="Script" path="res://scripts/crosshair.gd" id="2_ch"]
+[ext_resource type="Script" path="res://scripts/minimap.gd" id="3_mm"]
 
 [sub_resource type="StyleBoxFlat" id="SB_bg"]
 bg_color = Color(0, 0, 0, 0.45)
@@ -28,6 +29,12 @@ script = ExtResource("2_ch")
 
 [node name="Marker" type="AudioStreamPlayer" parent="."]
 volume_db = -4.0
+
+[node name="Minimap" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+script = ExtResource("3_mm")
 
 [node name="Ammo" type="Label" parent="."]
 anchor_left = 1.0
