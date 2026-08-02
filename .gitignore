@@ -1,0 +1,16 @@
+# Godot 4+ engine cache / import data
+.godot/
+
+# Exported / compiled builds
+build/
+export/
+*.exe
+*.pck
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# Editor temp
+*.tmp
+*.bak
