@@ -35,6 +35,18 @@ physics). Built in phases — see [BRIEF.md](BRIEF.md) for the full design.
 - ✅ World SFX: footsteps, bullet impacts, hit-marker + kill-confirm
 - ⬜ Truck + military-car variants, bot cover-seeking polish (follow-up)
 
+**Phase 4 — World Detail, Menu, Minimap, Polish: complete.**
+
+- ✅ Sci-fi main menu (Play / Gunsmith / Settings / Quit) + live settings
+  (sensitivity / team size / volume / fullscreen) + Esc pause menu
+- ✅ Tab-hold 2D minimap with team icons
+- ✅ Map detail: ruined building shells (nav-baked), roads, MultiMesh foliage, debris
+- ✅ Postprocess pass (glow / SSAO / SSR / volumetric fog / grading) + shadow
+  distance; 20v20 bot-count scaling verified (config `team_size`, 2–20)
+
+All four brief phases are in. Remaining polish needs manual (login-gated) assets —
+reload animations, real recorded SFX, a knife model — see ASSETS_CREDITS.md.
+
 ## Controls
 
 | Action | Key |
@@ -50,7 +62,8 @@ physics). Built in phases — see [BRIEF.md](BRIEF.md) for the full design.
 | Switch weapon | `1` Primary / `2` Pistol / `3` Knife |
 | Gunsmith | `G` |
 | Enter / exit vehicle | `E` (near it) |
-| Release mouse | `Esc` |
+| Minimap | `Tab` (hold) |
+| Pause | `Esc` |
 
 ## Run
 
