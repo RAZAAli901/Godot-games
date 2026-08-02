@@ -1,0 +1,34 @@
+[gd_scene load_steps=6 format=3 uid="uid://bqk1x2m3n4o5p"]
+
+[ext_resource type="Environment" path="res://resources/default_env.tres" id="1_env"]
+[ext_resource type="Script" path="res://scripts/main.gd" id="2_main"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_1"]
+size = Vector2(200, 200)
+
+[sub_resource type="StandardMaterial3D" id="Mat_ground"]
+albedo_color = Color(0.32, 0.33, 0.28, 1)
+roughness = 0.95
+
+[sub_resource type="WorldBoundaryShape3D" id="WBS_1"]
+
+[node name="Main" type="Node3D"]
+script = ExtResource("2_main")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource("1_env")
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.643, -0.766, 0, 0.766, 0.643, 0, 40, 0)
+light_energy = 1.2
+shadow_enabled = true
+directional_shadow_max_distance = 300.0
+
+[node name="TempGround" type="StaticBody3D" parent="."]
+
+[node name="Mesh" type="MeshInstance3D" parent="TempGround"]
+mesh = SubResource("PlaneMesh_1")
+surface_material_override/0 = SubResource("Mat_ground")
+
+[node name="Collision" type="CollisionShape3D" parent="TempGround"]
+shape = SubResource("WBS_1")
