@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="WeaponData" load_steps=2 format=3 uid="uid://dar1weapon001"]
+
+[ext_resource type="Script" path="res://scripts/weapon_data.gd" id="1_wd"]
+
+[resource]
+script = ExtResource("1_wd")
+weapon_name = "M4 Assault Rifle"
+category = "AR"
+damage_near = 30.0
+damage_far = 18.0
+falloff_start = 40.0
+falloff_end = 90.0
+fire_rate_rpm = 650.0
+mag_size = 30
+reload_time = 2.3
+ads_speed = 0.25
+automatic = true
+max_range = 300.0
+recoil_vertical = 0.022
+recoil_horizontal = 0.01

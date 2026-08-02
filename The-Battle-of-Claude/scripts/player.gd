@@ -20,6 +20,10 @@ extends CharacterBody3D
 @export var bob_frequency: float = 2.0
 @export var bob_amplitude: float = 0.055
 
+@export_group("Recoil")
+## How fast the view returns to aim after a recoil kick (higher = snappier).
+@export var recoil_recovery: float = 9.0
+
 const STAND_HEIGHT := 1.8
 const CROUCH_HEIGHT := 1.1
 const STAND_HEAD_Y := 1.6
@@ -28,7 +32,9 @@ const PITCH_LIMIT := 1.4 # radians (~80 degrees)
 
 var _mouse_sens: float = 0.0025
 var _gravity: float = 9.8
+var _yaw: float = 0.0
 var _pitch: float = 0.0
+var _recoil: Vector2 = Vector2.ZERO # x = pitch add, y = yaw add (radians)
 var _is_crouching: bool = false
 var _bob_time: float = 0.0
 var _base_cam_pos: Vector3
@@ -41,16 +47,29 @@ var _base_cam_pos: Vector3
 
 
 func _ready() -> void:
+	add_to_group("player")
 	_mouse_sens = ProjectSettings.get_setting("game/config/mouse_sensitivity", 0.0025)
 	_gravity = ProjectSettings.get_setting("physics/3d/default_gravity", 9.8)
 	_base_cam_pos = camera.position
+	_yaw = rotation.y
 
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
-		rotate_y(-event.relative.x * _mouse_sens)
+		_yaw -= event.relative.x * _mouse_sens
 		_pitch = clampf(_pitch - event.relative.y * _mouse_sens, -PITCH_LIMIT, PITCH_LIMIT)
-		head.rotation.x = _pitch
+
+
+## Called by the equipped weapon on each shot. Positive vertical = view kicks up.
+func apply_recoil(vertical: float, horizontal: float) -> void:
+	_recoil.x += vertical
+	_recoil.y += horizontal
+
+
+func _update_aim(delta: float) -> void:
+	_recoil = _recoil.lerp(Vector2.ZERO, 1.0 - exp(-recoil_recovery * delta))
+	rotation.y = _yaw + _recoil.y
+	head.rotation.x = _pitch + _recoil.x
 
 
 func _physics_process(delta: float) -> void:
@@ -59,6 +78,7 @@ func _physics_process(delta: float) -> void:
 	_handle_crouch(delta)
 	_handle_movement(delta)
 	move_and_slide()
+	_update_aim(delta)
 	_apply_head_bob(delta)
 
 
