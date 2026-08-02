@@ -1,0 +1,71 @@
+[gd_scene load_steps=2 format=3 uid="uid://cgunsmith00001"]
+
+[ext_resource type="Script" path="res://scripts/gunsmith.gd" id="1_gs"]
+
+[node name="Gunsmith" type="CanvasLayer"]
+layer = 20
+script = ExtResource("1_gs")
+
+[node name="Dim" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0, 0, 0, 0.55)
+
+[node name="Panel" type="Panel" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -310.0
+offset_right = 300.0
+offset_bottom = 310.0
+
+[node name="Margin" type="MarginContainer" parent="Panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme_override_constants/margin_left = 26
+theme_override_constants/margin_top = 22
+theme_override_constants/margin_right = 26
+theme_override_constants/margin_bottom = 22
+
+[node name="VBox" type="VBoxContainer" parent="Panel/Margin"]
+theme_override_constants/separation = 14
+
+[node name="Title" type="Label" parent="Panel/Margin/VBox"]
+theme_override_font_sizes/font_size = 34
+text = "GUNSMITH"
+horizontal_alignment = 1
+
+[node name="PrimaryRow" type="HBoxContainer" parent="Panel/Margin/VBox"]
+theme_override_constants/separation = 12
+
+[node name="Label" type="Label" parent="Panel/Margin/VBox/PrimaryRow"]
+custom_minimum_size = Vector2(110, 0)
+text = "Primary"
+
+[node name="PrimaryOption" type="OptionButton" parent="Panel/Margin/VBox/PrimaryRow"]
+size_flags_horizontal = 3
+
+[node name="Sep1" type="HSeparator" parent="Panel/Margin/VBox"]
+
+[node name="SlotsTitle" type="Label" parent="Panel/Margin/VBox"]
+theme_override_font_sizes/font_size = 18
+text = "Attachments (one per slot)"
+
+[node name="Slots" type="VBoxContainer" parent="Panel/Margin/VBox"]
+theme_override_constants/separation = 8
+
+[node name="Sep2" type="HSeparator" parent="Panel/Margin/VBox"]
+
+[node name="Stats" type="RichTextLabel" parent="Panel/Margin/VBox"]
+custom_minimum_size = Vector2(0, 230)
+bbcode_enabled = true
+fit_content = true
+size_flags_vertical = 3
+
+[node name="Hint" type="Label" parent="Panel/Margin/VBox"]
+modulate = Color(0.7, 0.7, 0.7, 1)
+theme_override_font_sizes/font_size = 15
+text = "Press G to close"
+horizontal_alignment = 1

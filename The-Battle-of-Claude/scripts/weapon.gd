@@ -150,6 +150,30 @@ func effective_move_mult() -> float:
 	return _eff_move_mult
 
 
+## Readable post-attachment stats for the gunsmith preview.
+func effective_stats() -> Dictionary:
+	return {
+		"name": data.weapon_name,
+		"category": data.category,
+		"damage_near": data.damage_near * _eff_damage_mult,
+		"damage_far": data.damage_far * _eff_damage_mult,
+		"rpm": data.fire_rate_rpm,
+		"mag": _eff_mag,
+		"reload": _eff_reload,
+		"ads": _eff_ads,
+		"recoil_v": _eff_recoil_v,
+		"recoil_h": _eff_recoil_h,
+		"range_start": data.falloff_start * _eff_range_mult,
+		"range_end": data.falloff_end * _eff_range_mult,
+		"move": _eff_move_mult,
+		"pellets": data.pellets,
+	}
+
+
+func get_attachment(slot: String) -> AttachmentData:
+	return attachments.get(slot)
+
+
 func current_ammo() -> Vector2i:
 	return Vector2i(_mag, _reserve)
 

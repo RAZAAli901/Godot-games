@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://bqk1x2m3n4o5p"]
+[gd_scene load_steps=7 format=3 uid="uid://bqk1x2m3n4o5p"]
 
 [ext_resource type="Environment" path="res://resources/default_env.tres" id="1_env"]
 [ext_resource type="Script" path="res://scripts/main.gd" id="2_main"]
 [ext_resource type="PackedScene" path="res://scenes/player/player.tscn" id="3_player"]
 [ext_resource type="PackedScene" path="res://scenes/world/terrain.tscn" id="4_world"]
 [ext_resource type="PackedScene" path="res://scenes/ui/hud.tscn" id="5_hud"]
+[ext_resource type="PackedScene" path="res://scenes/ui/gunsmith.tscn" id="6_gunsmith"]
 
 [node name="Main" type="Node3D"]
 script = ExtResource("2_main")
@@ -24,3 +25,5 @@ directional_shadow_max_distance = 400.0
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 
 [node name="HUD" parent="." instance=ExtResource("5_hud")]
+
+[node name="Gunsmith" parent="." instance=ExtResource("6_gunsmith")]
