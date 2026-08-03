@@ -35,22 +35,36 @@ func _ready() -> void:
 	_spawn_targets()
 
 
+func _load_gltf_node(path: String) -> Node3D:
+	var doc := GLTFDocument.new()
+	var state := GLTFState.new()
+	var err := doc.append_from_file(path, state)
+	if err == OK:
+		return doc.generate_scene(state)
+	return null
+
+
 func _scatter_nature_test_area() -> void:
-	var tree_scene: PackedScene = load("res://assets/models/nature/BirchTree_1.gltf")
-	var bush_scene: PackedScene = load("res://assets/models/nature/Bush.gltf")
-	if tree_scene == null or bush_scene == null:
-		return
-	var test_origin := Vector3(18, 0, 8)
+	var test_origin := Vector3(0, 0, -12) # right in front of player spawn
+	for i in 8:
+		var tree := _load_gltf_node("res://assets/models/nature/BirchTree_1.gltf")
+		if tree != null:
+			tree.position = test_origin + Vector3(randf_range(-12, 12), 0, randf_range(-15, 5))
+			tree.rotation.y = randf() * TAU
+			_detail.add_child(tree)
+	for i in 15:
+		var bush := _load_gltf_node("res://assets/models/nature/Bush.gltf")
+		if bush != null:
+			bush.position = test_origin + Vector3(randf_range(-15, 15), 0, randf_range(-15, 5))
+			bush.rotation.y = randf() * TAU
+			_detail.add_child(bush)
 	for i in 6:
-		var tree = tree_scene.instantiate()
-		tree.position = test_origin + Vector3(randf_range(-8, 8), 0, randf_range(-8, 8))
-		tree.rotation.y = randf() * TAU
-		_detail.add_child(tree)
-	for i in 12:
-		var bush = bush_scene.instantiate()
-		bush.position = test_origin + Vector3(randf_range(-12, 12), 0, randf_range(-12, 12))
-		bush.rotation.y = randf() * TAU
-		_detail.add_child(bush)
+		var rock := _load_gltf_node("res://assets/models/nature/Rock_1.gltf")
+		if rock != null:
+			rock.position = test_origin + Vector3(randf_range(-10, 10), 0, randf_range(-10, 5))
+			rock.rotation.y = randf() * TAU
+			_detail.add_child(rock)
+
 
 
 

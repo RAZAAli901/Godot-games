@@ -29,7 +29,12 @@ func _ready() -> void:
 	_spawn_teams()
 
 
+const DISABLE_BOTS_TEST_MODE: bool = true # Set to false to re-enable enemy bots
+
 func _spawn_teams() -> void:
+	if DISABLE_BOTS_TEST_MODE:
+		_recount()
+		return
 	for i in team_size - 1:
 		_spawn_bot(0, _ally_spawn(i))
 	for i in team_size:
