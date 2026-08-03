@@ -31,7 +31,27 @@ func _ready() -> void:
 	_build_roads()      # visual only
 	_scatter_foliage()  # multimesh, no collision
 	_scatter_debris()
+	_scatter_nature_test_area() # test cluster of Quaternius stylized nature props
 	_spawn_targets()
+
+
+func _scatter_nature_test_area() -> void:
+	var tree_scene: PackedScene = load("res://assets/models/nature/BirchTree_1.gltf")
+	var bush_scene: PackedScene = load("res://assets/models/nature/Bush.gltf")
+	if tree_scene == null or bush_scene == null:
+		return
+	var test_origin := Vector3(18, 0, 8)
+	for i in 6:
+		var tree = tree_scene.instantiate()
+		tree.position = test_origin + Vector3(randf_range(-8, 8), 0, randf_range(-8, 8))
+		tree.rotation.y = randf() * TAU
+		_detail.add_child(tree)
+	for i in 12:
+		var bush = bush_scene.instantiate()
+		bush.position = test_origin + Vector3(randf_range(-12, 12), 0, randf_range(-12, 12))
+		bush.rotation.y = randf() * TAU
+		_detail.add_child(bush)
+
 
 
 func _build_ground() -> void:
