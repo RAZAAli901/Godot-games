@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="WeaponData" load_steps=3 format=3 uid="uid://dsmg1weapon002"]
 
 [ext_resource type="Script" path="res://scripts/weapon_data.gd" id="1_wd"]
-[ext_resource type="PackedScene" path="res://assets/models/blaster-kit/blaster-c.glb" id="2_model"]
+[ext_resource type="PackedScene" path="res://assets/models/guns/animated/P90.fbx" id="2_model"]
 
 [resource]
 script = ExtResource("1_wd")
