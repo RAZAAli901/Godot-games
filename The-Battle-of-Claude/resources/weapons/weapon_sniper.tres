@@ -1,12 +1,12 @@
 [gd_resource type="Resource" script_class="WeaponData" load_steps=3 format=3 uid="uid://dsniper0weap0005"]
 
 [ext_resource type="Script" path="res://scripts/weapon_data.gd" id="1_wd"]
-[ext_resource type="PackedScene" path="res://assets/models/blaster-kit/blaster-p.glb" id="2_model"]
+[ext_resource type="PackedScene" path="res://assets/models/guns/animated/SniperRifle.tscn" id="2_model"]
 
 [resource]
 script = ExtResource("1_wd")
 view_model = ExtResource("2_model")
-model_scale = 0.68
+model_scale = 0.15
 muzzle_offset = Vector3(0, 0, -0.6)
 weapon_name = "Longbow Sniper"
 category = "Sniper"
