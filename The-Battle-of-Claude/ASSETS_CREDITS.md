@@ -7,7 +7,10 @@ source URL and license, per the ASSET SOURCING RULES in [BRIEF.md](BRIEF.md).
 
 | Asset | Type | Source | License | Used in |
 |---|---|---|---|---|
-| Kenney Blaster Kit 2.1 | 3D models (GLB) | https://kenney.nl/assets/blaster-kit | CC0 1.0 | Weapon view models (AR/SMG/Shotgun/LMG/Sniper/Pistol) — `assets/models/blaster-kit/` |
+| Kenney Blaster Kit 2.1 | 3D models (GLB) | https://kenney.nl/assets/blaster-kit | CC0 1.0 | Weapon view models — `assets/models/blaster-kit/` |
+| Quaternius Animated Guns Pack | 3D models + animations (FBX) | https://quaternius.com/packs/animatedguns.html | CC0 1.0 | Animated weapons (P90, Pistol, Revolver, Rifle, Shotgun, Sniper) — `assets/models/guns/animated/` |
+| Quaternius Ultimate Guns Pack | 3D models (OBJ) | https://quaternius.com/packs/ultimategun.html | CC0 1.0 | Static gun geometry placeholders (untextured) — `assets/models/guns/static/` |
+| Quaternius Ultimate Stylized Nature Pack | 3D models + textures (glTF) | https://quaternius.com/packs/ultimatestylizednature.html | CC0 1.0 | Stylized trees, bushes, flowers & rocks — `assets/models/nature/` |
 
 Gunshot SFX are currently **procedurally generated** in code (`scripts/sfx.gd`)
 as a no-dependency placeholder. `WeaponData.fire_sound` is the override slot for
