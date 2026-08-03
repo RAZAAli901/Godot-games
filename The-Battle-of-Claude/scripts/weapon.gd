@@ -50,6 +50,7 @@ var _view_model: Node3D
 var _fire_stream: AudioStream
 var _impact_stream: AudioStream
 var _suppressed: bool = false
+var _anim_player: AnimationPlayer = null
 
 
 func _ready() -> void:
@@ -75,6 +76,7 @@ func _build_view_model() -> void:
 		_view_model.rotation_degrees = data.model_euler_deg
 		_view_model.position = data.model_offset
 		muzzle.position = data.muzzle_offset
+		_anim_player = _find_animation_player(_view_model)
 		return
 	muzzle.position = Vector3(0, 0, -data.model_size.z * 0.5 - 0.02)
 	# Greybox: a single box sized/coloured from the data.
@@ -89,6 +91,26 @@ func _build_view_model() -> void:
 	mesh.material_override = mat
 	add_child(mesh)
 	_view_model = mesh
+
+
+func _find_animation_player(node: Node) -> AnimationPlayer:
+	if node is AnimationPlayer:
+		return node as AnimationPlayer
+	for child in node.get_children():
+		var ap := _find_animation_player(child)
+		if ap != null:
+			return ap
+	return null
+
+
+func _play_model_anim(anim_keyword: String) -> void:
+	if _anim_player == null:
+		return
+	for anim_name in _anim_player.get_animation_list():
+		if anim_keyword.to_lower() in anim_name.to_lower():
+			_anim_player.play(anim_name)
+			return
+
 
 
 # ---------------------------------------------------------------- attachments
@@ -253,6 +275,7 @@ func _fire() -> void:
 		_hitscan(spread)
 	if not _no_flash:
 		_show_muzzle_flash()
+	_play_model_anim("fire")
 	_play_shot_sound()
 	_kick()
 	ammo_changed.emit(_mag, _reserve)
@@ -378,6 +401,7 @@ func _start_reload() -> void:
 		return
 	_reloading = true
 	_reload_timer = _eff_reload
+	_play_model_anim("reload")
 	reload_started.emit(_eff_reload)
 
 
