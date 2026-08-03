@@ -69,7 +69,7 @@ func _on_player_died() -> void:
 
 
 func _recount() -> void:
-	if _ended:
+	if _ended or DISABLE_BOTS_TEST_MODE:
 		return
 	var allies := 0
 	var enemies := 0
