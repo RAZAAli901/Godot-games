@@ -1,0 +1,132 @@
+[gd_scene load_steps=2 format=3 uid="uid://ccalibrator00001"]
+
+[ext_resource type="Script" path="res://scripts/weapon_calibrator.gd" id="1_cal"]
+
+[node name="WeaponCalibrator" type="CanvasLayer"]
+layer = 25
+script = ExtResource("1_cal")
+
+[node name="Panel" type="Panel" parent="."]
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -340.0
+offset_top = 20.0
+offset_right = -20.0
+offset_bottom = 300.0
+
+[node name="Margin" type="MarginContainer" parent="Panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme_override_constants/margin_left = 18
+theme_override_constants/margin_top = 14
+theme_override_constants/margin_right = 18
+theme_override_constants/margin_bottom = 14
+
+[node name="VBox" type="VBoxContainer" parent="Panel/Margin"]
+theme_override_constants/separation = 10
+
+[node name="WeaponLabel" type="Label" parent="Panel/Margin/VBox"]
+theme_override_font_sizes/font_size = 16
+text = "WEAPON CALIBRATION"
+
+[node name="PosXRow" type="HBoxContainer" parent="Panel/Margin/VBox"]
+theme_override_constants/separation = 8
+
+[node name="Label" type="Label" parent="Panel/Margin/VBox/PosXRow"]
+custom_minimum_size = Vector2(60, 0)
+text = "Pos X"
+
+[node name="Slider" type="HSlider" parent="Panel/Margin/VBox/PosXRow"]
+custom_minimum_size = Vector2(160, 0)
+size_flags_horizontal = 3
+min_value = -1.0
+max_value = 1.0
+step = 0.005
+
+[node name="Value" type="Label" parent="Panel/Margin/VBox/PosXRow"]
+custom_minimum_size = Vector2(46, 0)
+text = "0.00"
+horizontal_alignment = 2
+
+[node name="PosYRow" type="HBoxContainer" parent="Panel/Margin/VBox"]
+theme_override_constants/separation = 8
+
+[node name="Label" type="Label" parent="Panel/Margin/VBox/PosYRow"]
+custom_minimum_size = Vector2(60, 0)
+text = "Pos Y"
+
+[node name="Slider" type="HSlider" parent="Panel/Margin/VBox/PosYRow"]
+custom_minimum_size = Vector2(160, 0)
+size_flags_horizontal = 3
+min_value = -1.0
+max_value = 1.0
+step = 0.005
+
+[node name="Value" type="Label" parent="Panel/Margin/VBox/PosYRow"]
+custom_minimum_size = Vector2(46, 0)
+text = "0.00"
+horizontal_alignment = 2
+
+[node name="PosZRow" type="HBoxContainer" parent="Panel/Margin/VBox"]
+theme_override_constants/separation = 8
+
+[node name="Label" type="Label" parent="Panel/Margin/VBox/PosZRow"]
+custom_minimum_size = Vector2(60, 0)
+text = "Pos Z"
+
+[node name="Slider" type="HSlider" parent="Panel/Margin/VBox/PosZRow"]
+custom_minimum_size = Vector2(160, 0)
+size_flags_horizontal = 3
+min_value = -3.0
+max_value = 1.0
+step = 0.005
+
+[node name="Value" type="Label" parent="Panel/Margin/VBox/PosZRow"]
+custom_minimum_size = Vector2(46, 0)
+text = "0.00"
+horizontal_alignment = 2
+
+[node name="RotYRow" type="HBoxContainer" parent="Panel/Margin/VBox"]
+theme_override_constants/separation = 8
+
+[node name="Label" type="Label" parent="Panel/Margin/VBox/RotYRow"]
+custom_minimum_size = Vector2(60, 0)
+text = "Rot Y"
+
+[node name="Slider" type="HSlider" parent="Panel/Margin/VBox/RotYRow"]
+custom_minimum_size = Vector2(160, 0)
+size_flags_horizontal = 3
+min_value = -180.0
+max_value = 180.0
+step = 1.0
+
+[node name="Value" type="Label" parent="Panel/Margin/VBox/RotYRow"]
+custom_minimum_size = Vector2(46, 0)
+text = "0°"
+horizontal_alignment = 2
+
+[node name="ScaleRow" type="HBoxContainer" parent="Panel/Margin/VBox"]
+theme_override_constants/separation = 8
+
+[node name="Label" type="Label" parent="Panel/Margin/VBox/ScaleRow"]
+custom_minimum_size = Vector2(60, 0)
+text = "Scale"
+
+[node name="Slider" type="HSlider" parent="Panel/Margin/VBox/ScaleRow"]
+custom_minimum_size = Vector2(160, 0)
+size_flags_horizontal = 3
+min_value = 0.05
+max_value = 3.0
+step = 0.01
+value = 1.0
+
+[node name="Value" type="Label" parent="Panel/Margin/VBox/ScaleRow"]
+custom_minimum_size = Vector2(46, 0)
+text = "1.00"
+horizontal_alignment = 2
+
+[node name="Hint" type="Label" parent="Panel/Margin/VBox"]
+modulate = Color(0.7, 0.7, 0.7, 1)
+theme_override_font_sizes/font_size = 13
+text = "Press ` to toggle · logs config to console"
+autowrap_mode = 2

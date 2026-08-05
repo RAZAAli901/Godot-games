@@ -1,14 +1,15 @@
-[gd_scene load_steps=10 format=3 uid="uid://bqk1x2m3n4o5p"]
+[gd_scene load_steps=11 format=3 uid="uid://bqk1x2m3n4o5p"]
 
 [ext_resource type="Environment" path="res://resources/default_env.tres" id="1_env"]
 [ext_resource type="Script" path="res://scripts/main.gd" id="2_main"]
 [ext_resource type="PackedScene" path="res://scenes/player/player.tscn" id="3_player"]
-[ext_resource type="PackedScene" path="res://scenes/world/terrain.tscn" id="4_world"]
+[ext_resource type="PackedScene" path="res://scenes/world/western_frontier_map.tscn" id="4_world"]
 [ext_resource type="PackedScene" path="res://scenes/ui/hud.tscn" id="5_hud"]
 [ext_resource type="PackedScene" path="res://scenes/ui/gunsmith.tscn" id="6_gunsmith"]
 [ext_resource type="Script" path="res://scripts/match_manager.gd" id="7_match"]
 [ext_resource type="PackedScene" path="res://scenes/vehicle.tscn" id="8_vehicle"]
 [ext_resource type="PackedScene" path="res://scenes/ui/pause_menu.tscn" id="9_pause"]
+[ext_resource type="PackedScene" path="res://scenes/ui/weapon_calibrator.tscn" id="10_calibrator"]
 
 [node name="Main" type="Node3D"]
 script = ExtResource("2_main")
@@ -38,3 +39,5 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 1.2, -3)
 [node name="Gunsmith" parent="." instance=ExtResource("6_gunsmith")]
 
 [node name="PauseMenu" parent="." instance=ExtResource("9_pause")]
+
+[node name="WeaponCalibrator" parent="." instance=ExtResource("10_calibrator")]

@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://cwestern0map0001"]
+
+[ext_resource type="Script" path="res://scripts/map_collision_gen.gd" id="1_col"]
+[ext_resource type="PackedScene" path="res://assets/map/western_frontier.glb" id="2_glb"]
+
+[node name="WesternFrontierMap" type="Node3D"]
+script = ExtResource("1_col")
+
+[node name="Scene" parent="." instance=ExtResource("2_glb")]

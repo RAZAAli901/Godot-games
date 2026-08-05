@@ -219,6 +219,19 @@ func is_reloading() -> bool:
 	return _reloading
 
 
+## The instantiated view-model node (real mesh if data.view_model is set,
+## otherwise the greybox). Used by the ` calibration overlay to live-drag
+## position/rotation/scale.
+func get_view_model() -> Node3D:
+	return _view_model
+
+
+## Resource path of the WeaponData backing this weapon, shown in the
+## calibrator so you know which .tres to paste the printed values into.
+func data_resource_path() -> String:
+	return data.resource_path if data != null else ""
+
+
 # ---------------------------------------------------------------- per-frame
 
 func _process(delta: float) -> void:

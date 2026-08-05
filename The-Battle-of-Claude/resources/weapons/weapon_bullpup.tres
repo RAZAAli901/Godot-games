@@ -1,0 +1,33 @@
+[gd_resource type="Resource" script_class="WeaponData" load_steps=3 format=3 uid="uid://dbullpup0real002"]
+
+[ext_resource type="Script" path="res://scripts/weapon_data.gd" id="1_wd"]
+[ext_resource type="PackedScene" path="res://assets/weapons/bullpup.glb" id="2_model"]
+
+[resource]
+script = ExtResource("1_wd")
+view_model = ExtResource("2_model")
+model_scale = 1.0
+model_euler_deg = Vector3(0, 0, 0)
+model_offset = Vector3(0, 0, 0)
+muzzle_offset = Vector3(0, 0, -0.45)
+weapon_name = "Bullpup Carbine"
+category = "SMG"
+loadout_slot = "primary"
+damage_near = 24.0
+damage_far = 12.0
+falloff_start = 22.0
+falloff_end = 50.0
+pellets = 1
+fire_rate_rpm = 800.0
+mag_size = 28
+reload_time = 1.9
+ads_speed = 0.18
+automatic = true
+max_range = 220.0
+hip_spread_deg = 2.6
+ads_fov = 60.0
+move_speed_mult = 1.02
+recoil_vertical = 0.017
+recoil_horizontal = 0.012
+model_size = Vector3(0.06, 0.1, 0.42)
+model_color = Color(0.15, 0.15, 0.16, 1)

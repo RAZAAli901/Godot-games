@@ -1,0 +1,33 @@
+[gd_resource type="Resource" script_class="WeaponData" load_steps=3 format=3 uid="uid://dsniperreal0003"]
+
+[ext_resource type="Script" path="res://scripts/weapon_data.gd" id="1_wd"]
+[ext_resource type="PackedScene" path="res://assets/weapons/sniper.glb" id="2_model"]
+
+[resource]
+script = ExtResource("1_wd")
+view_model = ExtResource("2_model")
+model_scale = 1.0
+model_euler_deg = Vector3(0, 0, 0)
+model_offset = Vector3(0, 0, 0)
+muzzle_offset = Vector3(0, 0, -0.7)
+weapon_name = "Bolt Sniper"
+category = "Sniper"
+loadout_slot = "primary"
+damage_near = 95.0
+damage_far = 70.0
+falloff_start = 100.0
+falloff_end = 200.0
+pellets = 1
+fire_rate_rpm = 45.0
+mag_size = 5
+reload_time = 3.4
+ads_speed = 0.45
+automatic = false
+max_range = 500.0
+hip_spread_deg = 5.0
+ads_fov = 22.0
+move_speed_mult = 0.86
+recoil_vertical = 0.036
+recoil_horizontal = 0.005
+model_size = Vector3(0.06, 0.1, 0.95)
+model_color = Color(0.06, 0.06, 0.07, 1)

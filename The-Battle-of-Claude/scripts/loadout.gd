@@ -1,25 +1,20 @@
 extends Node3D
 class_name Loadout
-## Owns the player's three weapon slots (Primary + Pistol + Knife), spawns a
-## weapon instance per slot, and switches between them (keys 1/2/3). The primary
-## can be swapped from the available list and its attachments edited by the
-## gunsmith. Also drives the equipped weapon's movement penalty on the player.
+## Owns the player's weapons. The loadout is fixed to exactly three real guns
+## — no generic primary/secondary/melee split, no pistol, no knife — switched
+## with 1/2/3. Gunsmith attachments apply to whichever gun is currently out.
 
 const WeaponScene: PackedScene = preload("res://scenes/weapons/weapon.tscn")
 
-const PRIMARIES: Array[WeaponData] = [
-	preload("res://resources/weapons/weapon_ar.tres"),
-	preload("res://resources/weapons/weapon_smg.tres"),
-	preload("res://resources/weapons/weapon_shotgun.tres"),
-	preload("res://resources/weapons/weapon_lmg.tres"),
-	preload("res://resources/weapons/weapon_sniper.tres"),
+## The only three weapons that exist in the game.
+const WEAPONS: Array[WeaponData] = [
+	preload("res://resources/weapons/weapon_carbine.tres"),
+	preload("res://resources/weapons/weapon_bullpup.tres"),
+	preload("res://resources/weapons/weapon_sniper_real.tres"),
 ]
-const SECONDARY: WeaponData = preload("res://resources/weapons/weapon_pistol.tres")
-const MELEE: WeaponData = preload("res://resources/weapons/weapon_knife.tres")
 
 signal weapon_switched(weapon: Weapon)
 
-var _primary_index: int = 0
 var _weapons: Array[Weapon] = []
 var _active: int = 0
 var _player: CharacterBody3D
@@ -45,9 +40,8 @@ func _build() -> void:
 		if is_instance_valid(w):
 			w.queue_free()
 	_weapons.clear()
-	_spawn(PRIMARIES[_primary_index])
-	_spawn(SECONDARY)
-	_spawn(MELEE)
+	for data in WEAPONS:
+		_spawn(data)
 	_active = 0
 	_apply_active()
 
@@ -87,18 +81,23 @@ func get_active_weapon() -> Weapon:
 	return _weapons[_active] if _active < _weapons.size() else null
 
 
+## Kept as "primary" for gunsmith.gd's existing dropdown/API shape — with only
+## three guns total there's no separate primary/secondary tier anymore, this
+## just means "whichever of the three is currently equipped".
 func get_primary() -> Weapon:
-	return _weapons[0] if _weapons.size() > 0 else null
+	return get_active_weapon()
 
 
 func get_primary_index() -> int:
-	return _primary_index
+	return _active
 
 
 func available_primaries() -> Array[WeaponData]:
-	return PRIMARIES
+	return WEAPONS
 
 
+## Switches weapons. Unlike the old version this no longer rebuilds the whole
+## loadout, so attachments fitted to the other two guns are preserved when you
+## swap back to them.
 func set_primary_index(index: int) -> void:
-	_primary_index = clampi(index, 0, PRIMARIES.size() - 1)
-	_build()
+	switch_to(index)
